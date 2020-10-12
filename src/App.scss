@@ -9,6 +9,41 @@
 .row {
   display: flex;
 }
+.Card {
+  background-color: #fff;
+  border-radius: 5px;
+  display: block;
+  padding: 16px;
+  margin: 8px;
+  max-width: 320px;
+  small {
+    color: lightslategray;
+  }
+  .card-flat-info,
+  .card-agent-info {
+    margin-bottom: 8px;
+  }
+  hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .card-actions {
+    padding: 10px 0;
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+  .small {
+    color: lightblue;
+  }
+  p {
+    margin: 0;
+  }
+}
+
 @media (max-width: 600px) {
   .App {
     padding: 16px;

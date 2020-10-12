@@ -1,12 +1,20 @@
 import React from "react";
-import "./Card.scss";
-export const Card = (props) => {
+import { useDispatch, useSelector } from "react-redux";
+import { selectLiked, toggleLiked } from "../../features/flats/flatsSlice";
+
+const Flat = (props) => {
+  const likedFlats = useSelector(selectLiked);
+  const dispatch = useDispatch();
+
   const { title, rooms, area, unit } = props.flatData.attributes;
+
   const { city, street, house, room } = props.flatData.attributes.address;
   const address = `${city === "Tyumen" ? "Тюмень" : city}, ул. ${street},
    д. ${house}, кв. ${room}`;
+
   const agentInfo = props.flatData.relationships;
   const { first_name, last_name, middle_name } = agentInfo.attributes;
+
   return (
     <div className="Card">
       <div className="card-flat-info">
@@ -31,10 +39,10 @@ export const Card = (props) => {
           href="/"
           onClick={(e) => {
             e.preventDefault();
-            props.toggleLike(e, props.flatData.id);
+            dispatch(toggleLiked(props.flatData.id));
           }}
         >
-          {props.likedFlats.includes(props.flatData.id) ? (
+          {likedFlats.includes(props.flatData.id) ? (
             <span role="img" aria-label="blue-heart">
               💙 Убрать сердешко
             </span>
@@ -48,3 +56,4 @@ export const Card = (props) => {
     </div>
   );
 };
+export default Flat;
