@@ -4,14 +4,14 @@ import axios from "axios";
 export const flatsSlice = createSlice({
   name: "flats",
   initialState: {
-    fetchedFlats: [],
+    fetchedFlats: { loading: true, data: [], error: "" },
     liked:
       JSON.parse(localStorage.getItem("liked")) ||
       localStorage.setItem("liked", "[]"),
   },
   reducers: {
     addFlats: (state, action) => {
-      state.fetchedFlats = action.payload;
+      state.fetchedFlats.data = action.payload;
     },
     toggleLiked: (state, action) => {
       const index = state.liked.indexOf(action.payload);
@@ -21,14 +21,29 @@ export const flatsSlice = createSlice({
         state.liked = [...state.liked, action.payload];
       }
     },
+    setLoading: (state) => {
+      state.fetchedFlats.loading = false;
+    },
+    setError: (state, { payload }) => {
+      state.fetchedFlats.error = payload;
+    },
   },
 });
-export const { addFlats, toggleLiked } = flatsSlice.actions;
+export const {
+  addFlats,
+  toggleLiked,
+  setLoading,
+  setError,
+} = flatsSlice.actions;
 
 export const fetchData = () => (dispatch) => {
-  axios.get("entities.json").then((res) => {
-    dispatch(addFlats(res.data.response));
-  });
+  axios
+    .get("entities.json")
+    .then((res) => {
+      dispatch(addFlats(res.data.response));
+    })
+    .catch(({ message }) => dispatch(setError(message)));
+  dispatch(setLoading());
 };
 
 export const selectFetchedFlats = (redux) => redux.flats.fetchedFlats;

@@ -7,7 +7,9 @@ function App() {
     <div className="App">
       <div className="wrapper">
         <h1>Тестовое задание</h1>
-        <Flats />
+        <div className="row">
+          <Flats />
+        </div>
       </div>
     </div>
   );

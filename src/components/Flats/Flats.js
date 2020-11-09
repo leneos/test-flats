@@ -11,8 +11,9 @@ import Loader from "../Loader/Loader";
 import Flat from "../Flat/Flat";
 
 export const Flats = () => {
-  const flats = useSelector(selectFetchedFlats);
+  const { loading, data, error } = useSelector(selectFetchedFlats);
   const liked = useSelector(selectLiked);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,14 +24,11 @@ export const Flats = () => {
     localStorage.setItem("liked", JSON.stringify(liked));
   }, [liked]);
 
-  const showFlats = () => {
-    if (flats !== [] && flats.length > 0) {
-      return flats.map((flat, index) => {
-        return (
-          <Flat key={index + flat.id} flatData={flat} likedFlats={liked} />
-        );
-      });
-    }
-  };
-  return <div className="row"> {showFlats() || <Loader />} </div>;
+  if (loading) return <Loader />;
+  if (error) return <p>{error}</p>;
+  if (!loading && !error) {
+    return data.map((flat, index) => {
+      return <Flat key={index + flat.id} flatData={flat} likedFlats={liked} />;
+    });
+  }
 };
