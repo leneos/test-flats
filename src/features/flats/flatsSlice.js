@@ -5,9 +5,7 @@ export const flatsSlice = createSlice({
   name: "flats",
   initialState: {
     fetchedFlats: { loading: true, data: [], error: "" },
-    liked:
-      JSON.parse(localStorage.getItem("liked")) ||
-      localStorage.setItem("liked", "[]"),
+    liked: JSON.parse(localStorage.getItem("liked")) || [],
   },
   reducers: {
     addFlats: (state, action) => {
