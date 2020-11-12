@@ -1,4 +1,4 @@
-Тестовое задание для компании.
+Тестовое задание для компании. React+Redux+localstorage
 
 Ссылка на проект: https://test-flats.web.app
 
